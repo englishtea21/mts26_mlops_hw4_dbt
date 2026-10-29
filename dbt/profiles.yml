@@ -1,0 +1,12 @@
+transactions_clickhouse_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      host: 127.0.0.1
+      port: 8123
+      user: dbt
+      password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
+      schema: analytics
+      secure: false
+      threads: 1

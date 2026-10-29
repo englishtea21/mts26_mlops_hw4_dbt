@@ -1,0 +1,10 @@
+.venv/
+logs/
+target/
+dbt_packages/
+dbt_internal_packages/
+profiles.yml
+!/dbt/profiles.yml
+.env
+/data/*.csv
+/train.csv
