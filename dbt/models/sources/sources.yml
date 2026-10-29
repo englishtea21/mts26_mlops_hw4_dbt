@@ -1,0 +1,70 @@
+version: 2
+
+sources:
+  - name: transactions_raw
+    schema: transactions_db
+    description: Исходные транзакции из CSV, загруженные в ClickHouse через Docker Compose.
+    tables:
+      - name: transactions
+        description: >-
+          Одна строка - запись о транзакции с признаком фрода.
+          Отдельных идентификаторов транзакции и клиента в данных нет (Вместо этого испрользуется комбинация полей с персданными).
+          Типы колонок проверены в ClickHouse командой DESCRIBE TABLE.
+        columns:
+          - name: transaction_time
+            data_type: DateTime
+            description: >-
+              Время транзакции. Сервер использует UTC; исходный часовой пояс CSV
+              не указан, поэтому перевод в местное время не выполняется.
+          - name: merch
+            data_type: String
+            description: Наименование мерчанта.
+          - name: cat_id
+            data_type: String
+            description: Категория транзакции; в исходной таблице найдено 14 значений.
+          - name: amount
+            data_type: Float64
+            description: Сумма транзакции; валюта в задании не указана.
+          - name: name_1
+            data_type: String
+            description: Имя клиента; не является уникальным идентификатором.
+          - name: name_2
+            data_type: String
+            description: Фамилия клиента; не является уникальным идентификатором.
+          - name: gender
+            data_type: String
+            description: Пол клиента, по условию M или F.
+          - name: street
+            data_type: String
+            description: Улица клиента.
+          - name: one_city
+            data_type: String
+            description: Город клиента.
+          - name: us_state
+            data_type: String
+            description: >-
+              Код штата или территории клиента. В таблице найдено 51 значение;
+          - name: post_code
+            data_type: String
+            description: Почтовый индекс; строковый тип сохраняет ведущие нули.
+          - name: lat
+            data_type: Float64
+            description: Широта местоположения клиента.
+          - name: lon
+            data_type: Float64
+            description: Долгота местоположения клиента.
+          - name: population_city
+            data_type: UInt64
+            description: Население города клиента.
+          - name: jobs
+            data_type: String
+            description: Профессия клиента.
+          - name: merchant_lat
+            data_type: Float64
+            description: Широта местоположения мерчанта.
+          - name: merchant_lon
+            data_type: Float64
+            description: Долгота местоположения мерчанта.
+          - name: target
+            data_type: UInt8
+            description: Признак фрода; 1 - мошенническая транзакция, 0 - обычная.

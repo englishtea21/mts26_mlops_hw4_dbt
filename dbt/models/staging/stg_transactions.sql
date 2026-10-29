@@ -1,0 +1,25 @@
+{{ config(materialized='view') }}
+select
+    transaction_time,
+    toDate(transaction_time) as transaction_date,
+    {{ dbt_date.day_of_week('toDate(transaction_time)', isoweek=true) }} as day_of_week,
+    trimBoth(merch) as merchant,
+    lowerUTF8(trimBoth(cat_id)) as category,
+    toFloat64(amount) as amount,
+    trimBoth(name_1) as name_1,
+    trimBoth(name_2) as name_2,
+    upperUTF8(trimBoth(gender)) as gender,
+    trimBoth(street) as street,
+    trimBoth(one_city) as city,
+    upperUTF8(trimBoth(us_state)) as state,
+    trimBoth(post_code) as post_code,
+    lat,
+    lon,
+    population_city,
+    trimBoth(jobs) as jobs,
+    merchant_lat,
+    merchant_lon,
+    toUInt8(target) as is_fraud,
+    {{ amount_bucket('amount') }} as amount_bucket,
+    toUInt8(amount_bucket = 'LARGE') as is_large_transaction
+from {{ source('transactions_raw', 'transactions') }}
