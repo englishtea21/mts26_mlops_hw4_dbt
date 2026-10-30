@@ -27,7 +27,7 @@ services:
         condition: service_healthy
     environment:
       CLICKHOUSE_HOST: clickhouse
-      CLICKHOUSE_USER: dbt
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:?Set CLICKHOUSE_USER in .env}
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:?Set CLICKHOUSE_PASSWORD in .env}
     entrypoint: ["bash", "/scripts/load-data.sh"]
     volumes:

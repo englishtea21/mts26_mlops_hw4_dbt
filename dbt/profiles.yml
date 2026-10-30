@@ -5,7 +5,7 @@ transactions_clickhouse_dbt:
       type: clickhouse
       host: 127.0.0.1
       port: 8123
-      user: dbt
+      user: "{{ env_var('CLICKHOUSE_USER') }}"
       password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
       schema: analytics
       secure: false
