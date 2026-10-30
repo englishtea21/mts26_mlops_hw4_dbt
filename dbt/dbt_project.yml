@@ -36,4 +36,5 @@ models:
   transactions_dbt:
     # Config indicated by + and applies to all files under models/example/
     example:
+      +enabled: false
       +materialized: view

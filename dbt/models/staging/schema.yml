@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: >-
+      Подготовленные транзакции: одна строка на запись источника, без фильтрации
+      и удаления дублей. Строки нормализованы, добавлены календарные поля и сегмент суммы.
+      Уникальный идентификатор транзакции отсутствует.
+    columns:
+      - name: transaction_time
+        description: Время транзакции из источника без изменения часового пояса.
+        data_tests: [not_null]
+      - name: transaction_date
+        description: Дата транзакции по сохранённому времени.
+        data_tests: [not_null]
+      - name: day_of_week
+        description: Номер дня недели по ISO; 1 — понедельник, 7 — воскресенье.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5, 6, 7]
+                quote: false
+      - name: merchant
+        description: Наименование мерчанта без пробелов по краям.
+        data_tests: [not_null]
+      - name: category
+        description: Категория транзакции в нижнем регистре, без пробелов по краям.
+        data_tests: [not_null]
+      - name: amount
+        description: Сумма транзакции типа Float64; валюта не указана в задании.
+        data_tests: [not_null]
+      - name: name_1
+        description: Имя клиента; часть согласованной группировки, а не уникальный ID.
+        data_tests: [not_null]
+      - name: name_2
+        description: Фамилия клиента; часть согласованной группировки.
+        data_tests: [not_null]
+      - name: gender
+        description: Пол клиента, нормализованный в верхний регистр.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [M, F]
+      - name: street
+        description: Улица клиента без пробелов по краям.
+        data_tests: [not_null]
+      - name: city
+        description: Город клиента без пробелов по краям.
+        data_tests: [not_null]
+      - name: state
+        description: Код штата или DC в верхнем регистре.
+        data_tests: [not_null]
+      - name: post_code
+        description: Почтовый индекс в строковом виде с сохранением ведущих нулей.
+        data_tests: [not_null]
+      - name: lat
+        description: Широта местоположения клиента.
+      - name: lon
+        description: Долгота местоположения клиента.
+      - name: population_city
+        description: Население города клиента.
+      - name: jobs
+        description: Профессия клиента без пробелов по краям.
+      - name: merchant_lat
+        description: Широта местоположения мерчанта.
+      - name: merchant_lon
+        description: Долгота местоположения мерчанта.
+      - name: is_fraud
+        description: Признак фрода; 1 — фрод, 0 — обычная транзакция.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+      - name: amount_bucket
+        description: >-
+          TINY — сумма меньше 5; SMALL — от 5 до 50; MEDIUM — от 50 до 500;
+          LARGE — от 500 включительно. Нижние границы включены, верхние исключены.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [TINY, SMALL, MEDIUM, LARGE]
+      - name: is_large_transaction
+        description: 1 для сегмента LARGE, иначе 0.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
