@@ -16,6 +16,7 @@ select
     lat,
     lon,
     population_city,
+    {{ population_bucket('population_city') }} as population_bucket,
     trimBoth(jobs) as jobs,
     merchant_lat,
     merchant_lon,
