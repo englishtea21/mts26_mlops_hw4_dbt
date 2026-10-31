@@ -1,1 +1,1 @@
-SELECT * FROM {{ ref('stg_transactions') }} WHERE amount < 0
+select * from {{ ref('stg_transactions') }} where amount < 0

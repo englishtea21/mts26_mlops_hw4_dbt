@@ -1,2 +1,7 @@
-SELECT * FROM {{ ref('stg_transactions') }} WHERE 
-lat not between -90 and 90 AND lon not between -180 and 180 AND merchant_lat not between -90 and 90 AND merchant_lon between -180 and 180
+select *
+from {{ ref('stg_transactions') }}
+where
+    lat not between -90 and 90
+    or lon not between -180 and 180
+    or merchant_lat not between -90 and 90
+    or merchant_lon not between -180 and 180
