@@ -1,0 +1,20 @@
+version: 2
+
+unit_tests:
+  - name: test_stg_transactions_amount_boundaries_and_state
+    description: >-
+      Проверяет границы сегментов суммы 5, 50 и 500, флаг крупной транзакции
+      и нормализацию кода штата из строки " ca " в "CA".
+    model: stg_transactions
+    given:
+      - input: source('transactions_raw', 'transactions')
+        format: csv
+        fixture: stg_transactions_amount_boundaries
+    expect:
+      rows:
+        - {amount: 4.99, state: CA, amount_bucket: TINY, is_large_transaction: 0}
+        - {amount: 5.00, state: CA, amount_bucket: SMALL, is_large_transaction: 0}
+        - {amount: 49.99, state: CA, amount_bucket: SMALL, is_large_transaction: 0}
+        - {amount: 50.00, state: CA, amount_bucket: MEDIUM, is_large_transaction: 0}
+        - {amount: 499.99, state: CA, amount_bucket: MEDIUM, is_large_transaction: 0}
+        - {amount: 500.00, state: CA, amount_bucket: LARGE, is_large_transaction: 1}

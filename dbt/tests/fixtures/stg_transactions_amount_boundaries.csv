@@ -1,0 +1,7 @@
+transaction_time,merch,cat_id,amount,name_1,name_2,gender,street,one_city,us_state,post_code,lat,lon,population_city,jobs,merchant_lat,merchant_lon,target
+2026-10-26 12:00:00,Test Shop,grocery_pos,4.99,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0
+2026-10-26 12:00:00,Test Shop,grocery_pos,5.00,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0
+2026-10-26 12:00:00,Test Shop,grocery_pos,49.99,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0
+2026-10-26 12:00:00,Test Shop,grocery_pos,50.00,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0
+2026-10-26 12:00:00,Test Shop,grocery_pos,499.99,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0
+2026-10-26 12:00:00,Test Shop,grocery_pos,500.00,Test,User,F,Test Street,Test City," ca ",90210,34.0,-118.0,10000,Test Job,34.0,-118.0,0

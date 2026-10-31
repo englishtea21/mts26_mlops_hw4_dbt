@@ -1,0 +1,41 @@
+version: 2
+
+unit_tests:
+  - name: test_daily_state_metrics_grouping_and_aggregates
+    description: "Проверяем расчет ежедневных метрик по штатам"
+    model: mart_daily_state_metrics
+    given:
+      - input: ref('stg_transactions')
+        rows:
+          - {transaction_date: '2020-01-01', state: CA, amount: 100.0, is_large_transaction: 0}
+          - {transaction_date: '2020-01-01', state: CA, amount: 500.0, is_large_transaction: 1}
+          - {transaction_date: '2020-01-01', state: NY, amount: 40.0, is_large_transaction: 0}
+          - {transaction_date: '2020-01-02', state: CA, amount: 1000.0, is_large_transaction: 1}
+    expect:
+      rows:
+        - transaction_date: '2020-01-01'
+          state: CA
+          transaction_count: 2
+          total_amount: 600.0
+          avg_amount: 300.0
+          p95_amount: 500.0
+          large_transaction_count: 1
+          large_transaction_pct: 50.0
+        - transaction_date: '2020-01-01'
+          state: NY
+          transaction_count: 1
+          total_amount: 40.0
+          avg_amount: 40.0
+          p95_amount: 40.0
+          large_transaction_count: 0
+          large_transaction_pct: 0.0
+        - transaction_date: '2020-01-02'
+          state: CA
+          transaction_count: 1
+          total_amount: 1000.0
+          avg_amount: 1000.0
+          p95_amount: 1000.0
+          large_transaction_count: 1
+          large_transaction_pct: 100.0
+    config:
+      compute: remote
