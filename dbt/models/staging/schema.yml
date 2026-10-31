@@ -92,3 +92,22 @@ models:
               arguments:
                 values: [0, 1]
                 quote: false
+    data_tests:
+      - elementary.schema_changes
+      - elementary.freshness_anomalies:
+          arguments:
+            timestamp_column: transaction_time
+            time_bucket:
+              period: hour
+              count: 1
+            training_period:
+              period: day
+              count: 14
+            detection_period:
+              period: day
+              count: 2
+            exclude_detection_period_from_training: true
+            anomaly_sensitivity: 3 # отличие более чем на 3 сигмы
+          config:
+            severity: warn
+            tags: [freshness_monitor]

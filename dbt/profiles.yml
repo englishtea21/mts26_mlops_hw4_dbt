@@ -10,3 +10,15 @@ transactions_clickhouse_dbt:
       schema: analytics
       secure: false
       threads: 1
+
+elementary:
+  outputs:
+    default:
+      type: "clickhouse"
+      host: "127.0.0.1"
+      port: 8123
+      user: "{{ env_var('CLICKHOUSE_USER') }}"
+      password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
+      dbname: "analytics_elementary"
+      schema: "analytics_elementary"
+      threads: 1
