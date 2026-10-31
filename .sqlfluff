@@ -1,0 +1,15 @@
+[sqlfluff]
+dialect = clickhouse
+templater = dbt
+max_line_length = 120
+rules = LT01, LT02, LT05, LT09, LT12, CP01, JJ01
+
+[sqlfluff:templater:dbt]
+project_dir = dbt
+profiles_dir = dbt
+profile = transactions_clickhouse_dbt
+target = dev
+dbt_skip_compilation_error = False
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower

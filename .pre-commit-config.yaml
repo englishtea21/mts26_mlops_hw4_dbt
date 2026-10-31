@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: sqlfluff-lint
+        name: SQLFluff (ClickHouse + dbt)
+        entry: .venv/bin/python -m dotenv --file .env run -- .venv/bin/sqlfluff lint
+        language: system
+        types: [sql]
+        files: ^dbt/(models|tests)/.*\.sql$
+        exclude: ^dbt/tests/fixtures/
+        require_serial: true
